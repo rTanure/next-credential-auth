@@ -6,6 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { signIn } from "next-auth/react"
 
 import z from "zod"
 
@@ -24,7 +25,15 @@ export default function LoginForm() {
   })
 
   const handleSubmit = (values: z.infer<typeof loginFormSchema>) => {
-    console.log(values)
+    signIn(
+      "credentials", 
+      {
+        email: values.email,
+        password: values.password,
+        redirect: false
+      }
+    )
+    // console.log(values)
   }
 
   return (
@@ -59,7 +68,7 @@ export default function LoginForm() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Senha</FormLabel>
                     <FormControl>
                       <Input placeholder="Digite o sua senha" type="password" {...field} />
                     </FormControl>
