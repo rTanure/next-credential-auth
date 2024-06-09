@@ -30,7 +30,7 @@ export const {
 
       async authorize(credentials, req) {
         
-        const res = await fetch("/api/login", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/login`, {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" }

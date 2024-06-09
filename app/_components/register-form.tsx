@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
 
 import z from "zod"
+import { useToast } from "@/components/ui/use-toast"
 
 const registerFormSchema = z.object({
   first_name: z.string().min(3, { message: "O nome deve ter pelo menos 3 caracteres." }),
@@ -22,6 +23,8 @@ const registerFormSchema = z.object({
 });
 
 export default function RegisterForm() {
+  const { toast } = useToast()
+
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -39,8 +42,20 @@ export default function RegisterForm() {
       body: JSON.stringify(values),
       headers: { "Content-Type": "application/json" }
     })
-      .then(res => res.json())
-      .then(data => console.log(data))
+      .then(res => res.ok)
+      .then(() => {
+        toast({
+          title: "Conta criada com sucesso",
+          description: "Você já pode fazer login com as credenciais fornecidas. O usuário criado é um administrador.",
+        })
+      })
+      .catch(() => {
+        toast({
+          title: "Erro ao criar conta",
+          description: "Ocorreu um erro ao criar a conta. Por favor, tente novamente.",
+          variant: "destructive"
+        })
+      })
   }
 
   return (

@@ -30,10 +30,10 @@ export default function LoginForm() {
       {
         email: values.email,
         password: values.password,
-        redirect: false
-      }
+        callbackUrl: "/admin",
+      },
     )
-    // console.log(values)
+
   }
 
   return (

@@ -21,9 +21,5 @@ export async function POST(req: NextRequest) {
   })
 
     
-  return new Response(JSON.stringify(body), {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
+  return new Response("User created", { status: 201 })
 }
