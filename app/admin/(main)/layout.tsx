@@ -1,11 +1,26 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { DashboardSidebar, DashboardSidebarFooter, DashboardSidebarHeader, DashboardSidebarHeaderTitle, DashboardSidebarMain, DashboardSidebarNav, DashboardSidebarNavHeader, DashboardSidebarNavLink, DashboardSidebarNavMain } from "./_components/dashboard-sidebar";
-import { LogoutButton } from "./_components/logout-button";
+import { DashboardSidebar, DashboardSidebarFooter, DashboardSidebarHeader, DashboardSidebarHeaderTitle, DashboardSidebarMain, DashboardSidebarNav, DashboardSidebarNavHeader, DashboardSidebarNavLink, DashboardSidebarNavMain } from "../_components/dashboard-sidebar";
+import { LogoutButton } from "../_components/logout-button";
 
 export default function AdminLayout({children}: {children: React.ReactNode}) {
+  const sidebarLinks = [
+    {
+      title: "Início",
+      href: "/admin"
+    },
+    {
+      title: "Usuários",
+      href: "/admin/users"
+    },
+    {
+      title: "Configurações",
+      href: "/admin/settings"
+    }
+  ]
+
   return (
     <main className="flex">
-      <DashboardSidebar className="w-64 h-screen">
+      <DashboardSidebar className="w-72 h-screen">
         <DashboardSidebarHeader>
           <DashboardSidebarHeaderTitle>Sua dashboard</DashboardSidebarHeaderTitle>
         </DashboardSidebarHeader>
@@ -15,7 +30,11 @@ export default function AdminLayout({children}: {children: React.ReactNode}) {
                 <DashboardSidebarHeaderTitle>Conteúdos</DashboardSidebarHeaderTitle>
               </DashboardSidebarNavHeader>
             <DashboardSidebarNavMain>
-              <DashboardSidebarNavLink href="/admin">Início</DashboardSidebarNavLink>
+              {
+                sidebarLinks.map((link, index) => (
+                  <DashboardSidebarNavLink key={index} href={link.href}>{link.title}</DashboardSidebarNavLink>
+                ))
+              }
             </DashboardSidebarNavMain>
           </DashboardSidebarNav>
         </DashboardSidebarMain>
@@ -23,14 +42,9 @@ export default function AdminLayout({children}: {children: React.ReactNode}) {
           <LogoutButton variant="outline" className="w-full"/>
         </DashboardSidebarFooter>
       </DashboardSidebar>
-      <ScrollArea className="px-4 h-screen w-full">
+      <div className="h-screen w-full">
         {children}
-        {children}
-        {children}
-        {children}
-        {children}
-        {children}
-      </ScrollArea>
+      </div>
     </main>
   )
 }
