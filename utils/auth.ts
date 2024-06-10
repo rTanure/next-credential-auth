@@ -9,20 +9,23 @@ export const {
   handlers: {GET, POST},
   auth
 } = NextAuth({
-  pages: {
-    signIn: "/auth",
-    signOut: "/auth",
-    error: "/auth",
-    verifyRequest: "/auth",
-    newUser: "/app"
+
+  session: {
+    strategy: "jwt",
   },
+
+  pages: {
+    signIn: "/login",
+  },
+
   secret: process.env.NEXT_SECRET,
+
   adapter: PrismaAdapter(prisma),
+
   providers: [
     CredentialsProvider({
-
       name: "Credentials",
-
+      
       credentials: {
         email: { label: "Email", type: "text" },
         password: {  label: "Password", type: "password" }
@@ -39,12 +42,13 @@ export const {
         const user = await res.json()
 
         if(res.ok && user) {
+          console.log(user)
           return user
         }
 
         return null
 
-      }
+      },
 
     }),
   ]
