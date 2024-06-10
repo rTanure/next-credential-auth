@@ -2,11 +2,18 @@
 
 import { Button } from "@/components/ui/button"
 import { signOut } from "next-auth/react"
+import React from "react"
 
-export function LogoutButton() {
+type Props = {
+  className?: string
+  variant?: "secondary" | "destructive" | "default" | "outline" | "ghost" | "link"
+  children?: React.ReactNode
+}
+
+export function LogoutButton({ className, variant = "destructive", children = "Logout" }: Props) {
   return (
-    <Button onClick={() => signOut()} variant="destructive">
-      Logout
+    <Button className={className} onClick={() => signOut()} variant={variant}>
+      {children}
     </Button>
   )
 }
